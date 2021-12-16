@@ -1,13 +1,15 @@
 ## Description
-This is a Laravel application that calls an external
-API service to get information about books & also uses Creates, Reads, Updates and Deletes data from a local database about books
+This is an application that calls an external
+API service to get information about books & also uses Creates, Reads, Updates and Deletes data from a local MYSQL database about books
 
 ## Steps to setup the aplication
 set up the .env file with your database authentication credentials and mail server credentials
 
-Generate migration with 'php artisan migrate'
+1) Install dependencies by running 'composer install'
 
-To run the application use 'php artisan serve'
+2) Generate migration with 'php artisan migrate'
+
+3) To run the application use 'php artisan serve'
 
 
 ## Features
@@ -25,7 +27,7 @@ Thrones”</li>
 <ol> 
 
 <!-- 1 -->
-<li> To create a book send a POST request to http://localhost:8000/api/v1/books
+<li> To create a book, send a POST request to http://localhost:8000/api/v1/books
 with the following data
     <ul>
         <li> name </li>
@@ -41,12 +43,12 @@ with the following data
 
 <!-- 2 -->
 <li>
-To get a read a book send a GET request to http://localhost:8000/api/v1/books
+To get a read a book, send a GET request to http://localhost:8000/api/v1/books
 </li>
 
 <!-- 3 -->
 <li>
-To get a update a book send a PATCH request to http://localhost:8000/api/v1/books/:id where :id is  a placeholder variable for an integer (for example 1) with the following data
+To get a update a book, send a PATCH request to http://localhost:8000/api/v1/books/:id where :id is  a placeholder variable for an integer (for example 1) with the following data
     <ul>
         <li> name </li>
         <li> isbn </li>
@@ -63,7 +65,7 @@ To get a update a book send a PATCH request to http://localhost:8000/api/v1/book
 <li>
 To get  delete a book send a DELETE request to http://localhost:8000/api/v1/books/:id.
 
-An  alternative way to delete a book is send a POST request to http://localhost:8000/api/v1/books/:id/delete
+An  alternative way to delete a book is to send a POST request to http://localhost:8000/api/v1/books/:id/delete
 </li>
 
 <li>

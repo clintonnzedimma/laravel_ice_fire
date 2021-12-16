@@ -1,14 +1,26 @@
 <?php 
+/**
+ * This class communicates with the  external ICE AND FIRE API at https://www.anapioficeandfire.com/api
+ */
+
 namespace App;
 use Illuminate\Support\Facades\Http;
 
-
 class BooksAPI {
 
+    /**
+     * Fetch all  books 
+     * @return array
+     */
     public function fetchAll() {
        return  Http::get('https://www.anapioficeandfire.com/api/books')->json();
     }
 
+    /**
+     * Fetch a single book by name
+     * @param  string name
+     * @return array
+     */
     public function fetchBookByName ($name) {
         $books = $this->fetchAll();
 
