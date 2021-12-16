@@ -3,14 +3,22 @@ This is an application that calls an external
 API service to get information about books & also uses Creates, Reads, Updates and Deletes data from a local MYSQL database about books
 
 ## Steps to setup the aplication
-set up the .env file with your database authentication credentials and mail server credentials
+Set up the .env file with your database authentication credentials and mail server credentials
 
-1) Install dependencies by running 'composer install'
+1) Install dependencies by running 
+```shell
+composer install
+```
 
-2) Generate migration with 'php artisan migrate'
+2) Generate migration with 
+```shell
+php artisan migrate
+```
 
-3) To run the application use 'php artisan serve'
-
+3) To run the application use 
+```shell
+php artisan serve
+```
 
 ## Features
 <div>
