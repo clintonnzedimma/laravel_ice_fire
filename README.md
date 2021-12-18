@@ -1,6 +1,6 @@
 ## Description
 This is an application that calls an external
-API service to get information about books & also uses Creates, Reads, Updates and Deletes data from a local MYSQL database about books
+API service to get information about books & also Create, Read, Update and Delete data from a local MYSQL database about books
 
 ## Steps to setup the aplication
 Set up the .env file with your database authentication credentials.
