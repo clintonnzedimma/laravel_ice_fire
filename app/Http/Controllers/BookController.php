@@ -172,5 +172,39 @@ class BookController extends Controller
                 "data" => []
             ],404);
         }
+    }
+    
+  /**
+     * Finds a bok
+     * @param  id
+     * @param  Illuminate\Http\Request
+     * @return  array
+     */
+    public function search(Request $request)
+    {    
+        try {
+           $searchQuery = $request->query("q");
+          
+            $result = Book::where('name','LIKE','%'.$searchQuery.'%')
+            ->orWhere('country','LIKE','%'.$searchQuery.'%')
+            ->orWhere('publisher','LIKE','%'.$searchQuery.'%')
+            ->orWhere('release_date','LIKE','%'.$searchQuery.'%')
+            ->get();
+
+            return [
+                "status_code" => 200,
+                "status" => "success",
+                "data" => $result
+            ];
+
+        } catch (\Exception $e) {
+        
+            return response()->json([
+                "status_code" => 404,
+                "status" => "not found",
+                "message" => $e->getMessage(),
+                "data" => []
+            ],404);
+        }
     }  
 }

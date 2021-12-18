@@ -81,6 +81,13 @@ To fetch a book, send a GET request to http://localhost:8000/api/v1/books/:id.
 </li>
 </ol>
 
+
+<!-- 5 -->
+<li> To search for a book,  send a GET request to http://localhost:8000/api/v1/books?q=:searchQuery  where <b>:searchQuery</b> is a variable. <b>:searchQuery</b> can by name , country, publisher
+ and release date
+</ol>
+
+
 <h5>Tests</h5>
 Unit Tests are provided
 </div>

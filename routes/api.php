@@ -28,4 +28,5 @@ Route::get('/v1/books', [BookController::class , "read"]);
 Route::patch('/v1/books/{id}', [BookController::class , "update"]);
 Route::delete('/v1/books/{id}', [BookController::class , "delete"]);
 Route::post('/v1/books/{id}/delete', [BookController::class , "delete"]);
+Route::get('/v1/books/search', [BookController::class , "search"]);
 Route::get('/v1/books/{id}', [BookController::class , "findOne"]);
