@@ -3,7 +3,7 @@ This is an application that calls an external
 API service to get information about books & also uses Creates, Reads, Updates and Deletes data from a local MYSQL database about books
 
 ## Steps to setup the aplication
-Set up the .env file with your database authentication credentials and mail server credentials
+Set up the .env file with your database authentication credentials.
 
 1) Install dependencies by running 
 ```shell
@@ -79,6 +79,8 @@ An  alternative way to delete a book is to send a POST request to http://localho
 <li>
 To fetch a book, send a GET request to http://localhost:8000/api/v1/books/:id.
 </li>
-
 </ol>
+
+<h5>Tests</h5>
+Unit Tests are provided
 </div>

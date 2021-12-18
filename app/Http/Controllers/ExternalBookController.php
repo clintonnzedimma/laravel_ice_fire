@@ -19,21 +19,16 @@ class ExternalBookController extends Controller
     public function find(Request $request){
         if($request->has("nameOfBook")) {
             $booksApi = new BooksAPI;
-            
             $book =  $booksApi->fetchBookByName($request->query("nameOfBook"));
-            $status_code = 404;
-            $status = "Not Found";
 
             if (!$book) {
-                http_response_code(404);
-                return [
+                return response()->json([
                     "status_code" => 404,
                     "status" => "not found",
                     "data" => []
-                ];
+                ], 404);
             } 
 
-            http_response_code(200);
             return  [
                 "status_code" => 200,
                 "status" => "success",

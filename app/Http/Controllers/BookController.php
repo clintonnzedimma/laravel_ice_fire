@@ -18,8 +18,9 @@ class BookController extends Controller
      */
     public function create(Request $request)
     {    
+        $payload =  json_decode(request()->getContent(), true);
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($payload,[
             'name' => 'required',
             'isbn' => 'required',
             'authors' => 'required',
@@ -31,62 +32,53 @@ class BookController extends Controller
   
 
         if ($validator->fails()) {
-            return [
-                "status_code" => 424,
+            return response()->json([
+                "status_code" => 400,
                 "status" => "error occured",
-                // "errors" => $validator->errors(),
+                "errors" => $validator->errors(),
                 "data" => []
-            ];
+            ], 400);
         }
 
-        Book::insert( [
-            'name' => $request->input("name"),
-            'isbn' => $request->input("isbn"),
-            'authors' => $request->input("authors"),
-            'country' => $request->input("country"),
-            'number_of_pages' => $request->input("number_of_pages"),
-            'publisher' => $request->input("publisher"),
-            'release_date' => $request->input("release_date"),
-        ]);
+        Book::insert($payload);
 
-        return [
+        return response()->json([
             "status_code" => 201,
             "status" => "success",
-            "errors" => null,
-            "data" => [
-                'name' => $request->input("name"),
-                'isbn' => $request->input("isbn"),
-                'authors' => [$request->input("authors")],
-                'country' => $request->input("country"),
-                'number_of_pages' => $request->input("number_of_pages"),
-                'publisher' => $request->input("publisher"),
-                'release_date' => $request->input("release_date"),
-                ]
-            ];
+            "data" => ["book" => $payload]
+            ], 201);
     }
 
 
   /**
      * Fetch all the books
-    * @param  Illuminate\Http\Request;
+     * @param  Illuminate\Http\Request;
      * @return  array
- 
-     */
+    */
     public function read(Request $request)
-    {    
-        $books = Book::get()->toArray();
+    {  
+        try {  
+            $books = Book::get()->toArray();
 
-        $books = array_map(function($arr){
-            $arr['authors'] = [ $arr['authors'] ];
-            return $arr;
-        }, $books);
+            $books = array_map(function($arr){
+                $arr['authors'] = [ $arr['authors'] ];
+                return $arr;
+            }, $books);
 
-
-        return [
+            return [
                 "status_code" => 200,
                 "status" => "success",
                 "data" => $books
             ];
+        } catch(\Exception $e){
+            return response()->json([
+                "status_code" => 400,
+                "status" => "error occured",
+                "message" => $e->getMessage(),
+                "data" => []
+            ],400);
+        }
+
     }
     
     
@@ -99,8 +91,10 @@ class BookController extends Controller
      */
     public function update($id, Request $request)
     {    
+        $payload =  json_decode(request()->getContent(), true);
+  
         try {
-           Book::where("id", $id)->update($request->input());
+           Book::where("id", $id)->update($payload);
            $book = Book::where("id",$id)->first();
            $book['authors'] = [$book['authors']];
             
@@ -110,11 +104,12 @@ class BookController extends Controller
                 "data" => $book
             ];
         } catch (\Exception $e) {
-            return [
-                "status_code" => 304,
+            return response()->json([
+                "status_code" => 400,
                 "status" => "error occured",
+                "message" => $e->getMessage(),
                 "data" => []
-            ];
+            ], 400);
         }
     } 
     
@@ -130,23 +125,22 @@ class BookController extends Controller
         try {
            
            $book = Book::where("id", $id)->first();
-
-           Book::where('id', $id)->delete();
+           $bookName = $book['name'];
+           $book->delete();
     
-            return [
+            return response()->json([
                 "status_code" => 204,
                 "status" => "success",
-                "message" => "The book `{$book['name']}` was deleted successfully",
+                "message" => "The book '{$bookName}' was deleted successfully",
                 "data" => []
-            ];
+            ], 200);
 
         } catch (\Exception $e) {
-        
-            return [
-                "status_code" => 304,
-                "status" => "error occured",
+               return response()->json([
+                "status_code" => 404,
+                "status" => "not found",
                 "data" => []
-            ];
+            ], 404);
         }
     }  
 
@@ -172,11 +166,11 @@ class BookController extends Controller
 
         } catch (\Exception $e) {
         
-            return [
+            return response()->json([
                 "status_code" => 404,
                 "status" => "not found",
                 "data" => []
-            ];
+            ],404);
         }
     }  
 }
